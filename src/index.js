@@ -37,7 +37,7 @@ client.on("message", async message => {
 client.login(process.env.TOKEN);
 
 const getInsult = async () => {
-    const res = await axios.get("https://insult.mattbas.org/api/insult.json?who=");
+    const res = await axios.get("https://evilinsult.com/generate_insult.php?lang=en&type=json");
     const {insult} = res.data;
     return insult;
 };
