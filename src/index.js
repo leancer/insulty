@@ -2,6 +2,7 @@ const Discord = require("discord.js");
 const axios = require("axios");
 require("dotenv").config();
 
+const helpembeds = require("./helpembeds");
 const client = new Discord.Client();
 
 client.once("ready",() => {
@@ -9,10 +10,10 @@ client.once("ready",() => {
 });
 
 client.on("message", async message => {
-	if(message.content.includes("!insult")){
-        const arry = message.content.split(" ");
-        if(arry.length > 1){
-            if(arry[1] === "me"){
+    if(message.content.includes("!insult")){
+        const commands = message.content.split(" ");
+        if(commands.length > 1){
+            if(commands[1].toUpperCase() === "ME"){
 
                 let userid = message.author.id;
                 
@@ -21,12 +22,15 @@ client.on("message", async message => {
                 const insult = await getInsult();
     
                 message.channel.send( userid + " "+insult);
-            }else if(arry[1].startsWith("<@!")){
-                const id = arry[1];
+            }else if(commands[1].startsWith("<@")){
+                const id = commands[1];
+                
     
                 const insult = await getInsult();
     
                 message.channel.send(id + " " +insult);
+            }else if(commands[1].toUpperCase() == "HELP"){
+                message.channel.send(helpembeds);
             }
         }else{
             message.channel.send("Currently in Early stage..");
