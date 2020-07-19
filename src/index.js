@@ -31,12 +31,17 @@ const client = new Discord.Client();
                     message.channel.send( userid + " "+insult);
                 }else if(commands[1].startsWith("<@")){
                     const id = commands[1];
+                    let lang = commands[2] || "english";
+        
+                    const insult = await getInsult(lang);
+                    if(insult.err){
+                        message.channel.send(insult.err);
+                    }else{
+                        message.channel.send(id + " " +insult.insult);
+                    }
                     
-        
-                    const insult = await getInsult();
-        
-                    message.channel.send(id + " " +insult);
-                }else if(commands[1].toUpperCase() == "HELP"){
+                }
+                else if(commands[1].toUpperCase() == "HELP"){
                     message.channel.send(helpembeds);
                 }
             }else{
